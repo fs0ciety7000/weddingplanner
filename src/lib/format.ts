@@ -35,6 +35,14 @@ export function formatDateShortFr(dateStr: string | null | undefined): string {
   return format(date, "d MMMM", { locale: fr });
 }
 
+/** "12 juin 2027" — no weekday, for compact headers like the sidebar. */
+export function formatDateLongFr(dateStr: string | null | undefined): string {
+  if (!dateStr) return "—";
+  const date = dateStr.length <= 10 ? new Date(dateStr + "T00:00:00") : new Date(dateStr);
+  if (Number.isNaN(date.getTime())) return "—";
+  return format(date, "d MMMM yyyy", { locale: fr });
+}
+
 /** "17 h 30" (or "17 h" on the hour) */
 export function formatTimeFr(dateStr: string | null | undefined): string {
   if (!dateStr) return "—";

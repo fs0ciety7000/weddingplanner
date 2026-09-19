@@ -30,7 +30,13 @@ const NAV_ITEMS = [
   { href: "/ideas", label: "Idées", icon: Lightbulb },
 ] as const;
 
-export function Nav({ onNavigate }: { onNavigate?: () => void }) {
+export function Nav({
+  onNavigate,
+  openTasksCount,
+}: {
+  onNavigate?: () => void;
+  openTasksCount?: number;
+}) {
   const pathname = usePathname();
 
   return (
@@ -51,7 +57,12 @@ export function Nav({ onNavigate }: { onNavigate?: () => void }) {
             )}
           >
             <Icon className="h-4 w-4 shrink-0" strokeWidth={1.5} />
-            {item.label}
+            <span className="flex-1">{item.label}</span>
+            {item.href === "/tasks" && !!openTasksCount && (
+              <span className="rounded-full bg-gold/15 px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-gold-ink">
+                {openTasksCount}
+              </span>
+            )}
           </Link>
         );
       })}

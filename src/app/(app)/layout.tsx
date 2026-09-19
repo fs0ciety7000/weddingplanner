@@ -13,8 +13,19 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const { active, memberships } = await getWeddingContext();
   if (!active) redirect("/onboarding");
 
+  const { count: openTasksCount } = await supabase
+    .from("tasks")
+    .select("*", { count: "exact", head: true })
+    .eq("wedding_id", active.wedding.id)
+    .eq("done", false);
+
   return (
-    <AppShell wedding={active.wedding} memberships={memberships} userEmail={user.email ?? ""}>
+    <AppShell
+      wedding={active.wedding}
+      memberships={memberships}
+      userEmail={user.email ?? ""}
+      openTasksCount={openTasksCount ?? undefined}
+    >
       {children}
     </AppShell>
   );

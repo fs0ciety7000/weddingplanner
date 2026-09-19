@@ -67,8 +67,12 @@ export default async function DashboardPage() {
       <section className="relative overflow-hidden rounded-lg border border-line bg-card px-6 py-8 sm:px-10 sm:py-10">
         <div
           aria-hidden
-          className="pointer-events-none absolute -top-16 -right-10 h-56 w-56 rounded-full bg-sage-pale/70 blur-2xl"
-        />
+          className="pointer-events-none absolute inset-y-0 right-0 hidden w-72 sm:flex sm:items-end sm:justify-end sm:gap-3 sm:pr-6"
+        >
+          <div className="h-24 w-16 translate-y-6 rounded-t-arch bg-sage-pale" />
+          <div className="h-36 w-16 translate-y-6 rounded-t-arch bg-sage/40" />
+          <div className="h-16 w-16 translate-y-6 rounded-t-arch bg-gold/25" />
+        </div>
         <p className="text-label text-muted-foreground">Notre mariage</p>
         <h1 className="text-display mt-2 text-foreground">
           <CoupleName name={wedding.name} />
