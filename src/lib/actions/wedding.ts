@@ -10,6 +10,7 @@ export async function createWedding(formData: FormData) {
   const supabase = await createClient();
   const {
     data: { user },
+    error: userError,
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
@@ -33,7 +34,16 @@ export async function createWedding(formData: FormData) {
     .single();
 
   if (error || !data) {
-    redirect(`/onboarding?error=${encodeURIComponent(error?.message ?? "Erreur inconnue")}`);
+    // TEMPORARY diagnostic payload — remove once the RLS issue is confirmed fixed.
+    const diag = {
+      userId: user!.id,
+      userErr: userError?.message ?? null,
+      code: error?.code ?? null,
+      message: error?.message ?? null,
+      details: error?.details ?? null,
+      hint: error?.hint ?? null,
+    };
+    redirect(`/onboarding?error=${encodeURIComponent(JSON.stringify(diag))}`);
   }
 
   const cookieStore = await cookies();
