@@ -49,7 +49,7 @@ export default async function GuestsPage() {
       action={createGuest.bind(null, wedding.id)}
       submitLabel="Ajouter"
     >
-      <GuestFields />
+      <GuestFields wedding={wedding} />
     </FormDialog>
   );
 
@@ -117,7 +117,7 @@ export default async function GuestsPage() {
                       </TableCell>
                       <TableCell className="text-muted-foreground">{guest.group_label ?? "—"}</TableCell>
                       <TableCell className="text-muted-foreground">
-                        {guest.side ? guestSideLabel(guest.side) : "—"}
+                        {guest.side ? guestSideLabel(guest.side, wedding) : "—"}
                       </TableCell>
                       <TableCell className="text-center tabular-nums text-muted-foreground">
                         {guest.plus_one ? "1" : "0"} / {guest.children_count}
@@ -139,7 +139,7 @@ export default async function GuestsPage() {
                             title="Modifier l'invité"
                             action={updateGuest.bind(null, guest.id)}
                           >
-                            <GuestFields guest={guest} />
+                            <GuestFields guest={guest} wedding={wedding} />
                           </FormDialog>
                           <form action={deleteGuest.bind(null, guest.id)}>
                             <Button variant="ghost" size="icon-sm" type="submit" aria-label="Supprimer">

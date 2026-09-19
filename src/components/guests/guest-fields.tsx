@@ -9,10 +9,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { GUEST_SIDE, RSVP_STATUS } from "@/lib/status";
-import type { Guest } from "@/lib/types/database";
+import { getGuestSideOptions, RSVP_STATUS } from "@/lib/status";
+import type { Guest, Wedding } from "@/lib/types/database";
 
-export function GuestFields({ guest }: { guest?: Guest }) {
+export function GuestFields({ guest, wedding }: { guest?: Guest; wedding: Wedding }) {
+  const guestSideOptions = getGuestSideOptions(wedding);
+
   return (
     <>
       <div className="grid grid-cols-2 gap-4">
@@ -38,7 +40,7 @@ export function GuestFields({ guest }: { guest?: Guest }) {
               <SelectValue placeholder="Choisir" />
             </SelectTrigger>
             <SelectContent>
-              {GUEST_SIDE.map((s) => (
+              {guestSideOptions.map((s) => (
                 <SelectItem key={s.value} value={s.value}>
                   {s.label}
                 </SelectItem>

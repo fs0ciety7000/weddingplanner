@@ -4,7 +4,7 @@ import { QuickAddTask } from "@/components/tasks/quick-add-task";
 import { TaskRow } from "@/components/tasks/task-row";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
-import { GUEST_SIDE } from "@/lib/status";
+import { getGuestSideOptions } from "@/lib/status";
 import { createClient } from "@/lib/supabase/server";
 import { requireActiveWedding } from "@/lib/wedding";
 import type { GuestSide } from "@/lib/types/database";
@@ -15,6 +15,7 @@ export default async function TasksPage(props: PageProps<"/tasks">) {
   const showDone = searchParams.done === "1";
 
   const { wedding } = await requireActiveWedding();
+  const guestSideOptions = getGuestSideOptions(wedding);
   const supabase = await createClient();
 
   const { data } = await supabase
@@ -69,11 +70,11 @@ export default async function TasksPage(props: PageProps<"/tasks">) {
         }
       />
 
-      <QuickAddTask weddingId={wedding.id} />
+      <QuickAddTask wedding={wedding} />
 
       <div className="mb-6 flex flex-wrap gap-2">
         {filterChip(null, "Tous")}
-        {GUEST_SIDE.map((s) => filterChip(s.value, s.label))}
+        {guestSideOptions.map((s) => filterChip(s.value, s.label))}
       </div>
 
       {open.length === 0 ? (
@@ -81,7 +82,7 @@ export default async function TasksPage(props: PageProps<"/tasks">) {
       ) : (
         <div className="rounded-md border border-line bg-card px-4">
           {open.map((task) => (
-            <TaskRow key={task.id} task={task} />
+            <TaskRow key={task.id} task={task} wedding={wedding} />
           ))}
         </div>
       )}
@@ -94,7 +95,7 @@ export default async function TasksPage(props: PageProps<"/tasks">) {
           {showDone && (
             <div className="mt-3 rounded-md border border-line bg-card px-4">
               {done.map((task) => (
-                <TaskRow key={task.id} task={task} />
+                <TaskRow key={task.id} task={task} wedding={wedding} />
               ))}
             </div>
           )}

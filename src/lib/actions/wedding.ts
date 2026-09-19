@@ -15,6 +15,8 @@ export async function createWedding(formData: FormData) {
   if (!user) redirect("/login");
 
   const name = String(formData.get("name") ?? "").trim() || "Notre mariage";
+  const partner1Name = String(formData.get("partner1_name") ?? "").trim() || null;
+  const partner2Name = String(formData.get("partner2_name") ?? "").trim() || null;
   const weddingDate = String(formData.get("wedding_date") ?? "") || null;
   const venueCity = String(formData.get("venue_city") ?? "").trim() || null;
   const budgetTotal = formData.get("budget_total");
@@ -24,6 +26,8 @@ export async function createWedding(formData: FormData) {
     .from("weddings")
     .insert({
       name,
+      partner1_name: partner1Name,
+      partner2_name: partner2Name,
       wedding_date: weddingDate,
       venue_city: venueCity,
       budget_total: budgetTotal ? Number(budgetTotal) : null,
@@ -73,6 +77,8 @@ export async function updateWedding(weddingId: string, formData: FormData) {
   const supabase = await createClient();
 
   const name = String(formData.get("name") ?? "").trim();
+  const partner1Name = String(formData.get("partner1_name") ?? "").trim() || null;
+  const partner2Name = String(formData.get("partner2_name") ?? "").trim() || null;
   const weddingDate = String(formData.get("wedding_date") ?? "") || null;
   const venueCity = String(formData.get("venue_city") ?? "").trim() || null;
   const budgetTotal = formData.get("budget_total");
@@ -83,6 +89,8 @@ export async function updateWedding(weddingId: string, formData: FormData) {
     .from("weddings")
     .update({
       name: name || "Notre mariage",
+      partner1_name: partner1Name,
+      partner2_name: partner2Name,
       wedding_date: weddingDate,
       venue_city: venueCity,
       budget_total: budgetTotal ? Number(budgetTotal) : null,

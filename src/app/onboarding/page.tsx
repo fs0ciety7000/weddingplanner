@@ -47,6 +47,20 @@ export default async function OnboardingPage(props: PageProps<"/onboarding">) {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
+                <Label htmlFor="partner1_name">Votre prénom</Label>
+                <Input id="partner1_name" name="partner1_name" placeholder="Camille" required />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="partner2_name">Prénom de votre partenaire</Label>
+                <Input id="partner2_name" name="partner2_name" placeholder="Alex" required />
+              </div>
+            </div>
+            <p className="-mt-3 text-xs text-muted-foreground">
+              Utilisés pour remplacer « Partenaire 1/2 » par vos vrais prénoms partout dans l&apos;app.
+            </p>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1.5">
                 <Label htmlFor="wedding_date">Date envisagée</Label>
                 <Input id="wedding_date" name="wedding_date" type="date" />
               </div>

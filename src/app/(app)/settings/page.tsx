@@ -34,6 +34,17 @@ export default async function SettingsPage() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
+                <Label htmlFor="partner1_name">Votre prénom</Label>
+                <Input id="partner1_name" name="partner1_name" defaultValue={wedding.partner1_name ?? ""} placeholder="Camille" />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="partner2_name">Prénom de votre partenaire</Label>
+                <Input id="partner2_name" name="partner2_name" defaultValue={wedding.partner2_name ?? ""} placeholder="Alex" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1.5">
                 <Label htmlFor="wedding_date">Date du mariage</Label>
                 <Input id="wedding_date" name="wedding_date" type="date" defaultValue={wedding.wedding_date ?? ""} />
               </div>

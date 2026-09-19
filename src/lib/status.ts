@@ -122,11 +122,28 @@ export const BUDGET_ITEM_STATUS: StatusMeta<BudgetItemStatus>[] = asOptions([
   { value: "paye", label: "Payé", tone: "sage" },
 ]);
 
-export const GUEST_SIDE: { value: GuestSide; label: string }[] = [
-  { value: "marie1", label: "Partenaire 1" },
-  { value: "marie2", label: "Partenaire 2" },
-  { value: "les_deux", label: "Les deux" },
-];
+/**
+ * "Côté" labels depend on the couple's actual first names, so these are
+ * functions rather than a static list — pass the active wedding (or just
+ * its two partner name fields) to get "Nicolas" / "Gratia" instead of the
+ * generic "Partenaire 1" / "Partenaire 2" fallback.
+ */
+type PartnerNames = { partner1_name: string | null; partner2_name: string | null };
+
+export function getGuestSideOptions(
+  wedding: PartnerNames
+): { value: GuestSide; label: string }[] {
+  return [
+    { value: "marie1", label: wedding.partner1_name?.trim() || "Partenaire 1" },
+    { value: "marie2", label: wedding.partner2_name?.trim() || "Partenaire 2" },
+    { value: "les_deux", label: "Les deux" },
+  ];
+}
+
+export function guestSideLabel(side: GuestSide, wedding: PartnerNames): string {
+  const options = getGuestSideOptions(wedding);
+  return options.find((o) => o.value === side)?.label ?? side;
+}
 
 export const RSVP_STATUS: StatusMeta<RsvpStatus>[] = asOptions([
   { value: "en_attente", label: "En attente", tone: "neutral" },
@@ -158,4 +175,3 @@ export const roomPayerLabel = buildLabelLookup(ROOM_PAYER);
 export const ceremonyCategoryLabel = buildLabelLookup(CEREMONY_CATEGORY);
 export const protocolTypeLabel = buildLabelLookup(PROTOCOL_TYPE);
 export const moodboardTypeLabel = buildLabelLookup(MOODBOARD_TYPE);
-export const guestSideLabel = buildLabelLookup(GUEST_SIDE);

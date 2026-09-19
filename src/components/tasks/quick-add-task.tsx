@@ -12,17 +12,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { createTask } from "@/lib/actions/tasks";
-import { GUEST_SIDE } from "@/lib/status";
+import { getGuestSideOptions } from "@/lib/status";
+import type { Wedding } from "@/lib/types/database";
 
-export function QuickAddTask({ weddingId }: { weddingId: string }) {
+export function QuickAddTask({ wedding }: { wedding: Wedding }) {
   const formRef = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
+  const guestSideOptions = getGuestSideOptions(wedding);
 
   return (
     <form
       ref={formRef}
       action={(formData) => startTransition(async () => {
-        await createTask(weddingId, formData);
+        await createTask(wedding.id, formData);
         formRef.current?.reset();
       })}
       className="mb-6 flex flex-wrap items-center gap-2"
@@ -34,7 +36,7 @@ export function QuickAddTask({ weddingId }: { weddingId: string }) {
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          {GUEST_SIDE.map((s) => (
+          {guestSideOptions.map((s) => (
             <SelectItem key={s.value} value={s.value}>
               {s.label}
             </SelectItem>

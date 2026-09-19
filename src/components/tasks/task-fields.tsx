@@ -8,10 +8,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { GUEST_SIDE, TASK_AREAS } from "@/lib/status";
-import type { Task } from "@/lib/types/database";
+import { getGuestSideOptions, TASK_AREAS } from "@/lib/status";
+import type { Task, Wedding } from "@/lib/types/database";
 
-export function TaskFields({ task }: { task?: Task }) {
+export function TaskFields({ task, wedding }: { task?: Task; wedding: Wedding }) {
+  const guestSideOptions = getGuestSideOptions(wedding);
+
   return (
     <>
       <div className="space-y-1.5">
@@ -30,7 +32,7 @@ export function TaskFields({ task }: { task?: Task }) {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {GUEST_SIDE.map((s) => (
+              {guestSideOptions.map((s) => (
                 <SelectItem key={s.value} value={s.value}>
                   {s.label}
                 </SelectItem>

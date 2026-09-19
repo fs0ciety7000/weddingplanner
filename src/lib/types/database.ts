@@ -46,6 +46,8 @@ export type BudgetItemStatus = "a_prevoir" | "devis" | "acompte_verse" | "solde_
 export type Wedding = {
   id: string;
   name: string;
+  partner1_name: string | null;
+  partner2_name: string | null;
   wedding_date: string | null;
   venue_city: string | null;
   budget_total: number | null;

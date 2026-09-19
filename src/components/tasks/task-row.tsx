@@ -10,9 +10,9 @@ import { toggleTask, updateTask } from "@/lib/actions/tasks";
 import { formatDateFr, daysUntil } from "@/lib/format";
 import { guestSideLabel } from "@/lib/status";
 import { cn } from "@/lib/utils";
-import type { Task } from "@/lib/types/database";
+import type { Task, Wedding } from "@/lib/types/database";
 
-export function TaskRow({ task }: { task: Task }) {
+export function TaskRow({ task, wedding }: { task: Task; wedding: Wedding }) {
   const [, startTransition] = useTransition();
   const overdue = !task.done && task.due_date && (daysUntil(task.due_date) ?? 0) < 0;
 
@@ -35,7 +35,7 @@ export function TaskRow({ task }: { task: Task }) {
               {overdue ? " · en retard" : ""}
             </span>
           )}
-          <span className="rounded-full bg-muted px-2 py-0.5">{guestSideLabel(task.assigned_to)}</span>
+          <span className="rounded-full bg-muted px-2 py-0.5">{guestSideLabel(task.assigned_to, wedding)}</span>
           {task.area && <span className="rounded-full bg-gold/15 px-2 py-0.5 text-gold-ink">{task.area}</span>}
         </div>
       </div>
@@ -48,7 +48,7 @@ export function TaskRow({ task }: { task: Task }) {
         title="Modifier la tâche"
         action={updateTask.bind(null, task.id)}
       >
-        <TaskFields task={task} />
+        <TaskFields task={task} wedding={wedding} />
       </FormDialog>
     </div>
   );

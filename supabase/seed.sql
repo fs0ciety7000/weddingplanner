@@ -26,8 +26,8 @@ begin
   -- Mariage (le trigger on_wedding_created crée automatiquement le
   -- membre owner, les 4 critères par défaut et les 9 catégories budget)
   -- --------------------------------------------------------------------
-  insert into weddings (name, wedding_date, venue_city, budget_total, guest_count_estimate, theme_description, created_by)
-  values ('Nicolas & Gratia', '2027-06-12', 'Provence', 28000, 85,
+  insert into weddings (name, partner1_name, partner2_name, wedding_date, venue_city, budget_total, guest_count_estimate, theme_description, created_by)
+  values ('Nicolas & Gratia', 'Nicolas', 'Gratia', '2027-06-12', 'Provence', 28000, 85,
           'Champêtre chic, tons sauge et terracotta, ambiance conviviale et chaleureuse.', v_user_id)
   returning id into v_wedding_id;
 
